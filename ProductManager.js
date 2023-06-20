@@ -23,11 +23,12 @@ export class ProductManager {
     return products.find((product) => product.code === code);
   }
 
-  async getProducts() {
+  async getProducts(limit) {
     try {
       if (fs.existsSync(this.path)) {
-        const data = await fs.promises.readFile(this.path, "utf-8");      
-        return JSON.parse(data);
+        const data = await fs.promises.readFile(this.path, "utf-8");    
+        const result = limit ? JSON.parse(data).slice(0, limit) : JSON.parse(data);
+        return result;
       } else {
         // await fs.promises.writeFile(this.path, JSON.stringify([], null, 2));
         return [];
@@ -68,6 +69,7 @@ export class ProductManager {
   async getProductById(id) {
     try {
       const products = await this.getProducts();
+      id = parseInt(id);
       return products.find((product) => product.id === id);
     } catch (error) {
       throw error;

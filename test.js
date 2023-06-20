@@ -29,7 +29,7 @@ const testProductManger = async () => {
     await productManager.addProduct(product2);
 
     console.log("agregados: ", await productManager.getProducts());
-
+/*
     const findProduct = await productManager.getProductById(2);
     console.log({ findProduct });
 
@@ -50,9 +50,11 @@ const testProductManger = async () => {
 
     const deleted = await productManager.getProducts();
     console.log({ deleted });
+    */
   } catch (error) {
     console.log("ERROR: ", error);
   }
+  
 };
 
 testProductManger();
