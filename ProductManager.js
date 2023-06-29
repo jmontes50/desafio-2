@@ -61,6 +61,7 @@ export class ProductManager {
       };
       products.push(newProduct);
       await fs.promises.writeFile(this.path, JSON.stringify(products));
+      return newProduct;
     } catch (error) {
       throw error;
     }
@@ -90,11 +91,13 @@ export class ProductManager {
     }
     try {
       const products = await this.getProducts();
-      const product = this.getProductById(id);
+      const product = await this.getProductById(id);
 
       if (!product) {
         throw new Error("El producto a actualizar no existe");
       }
+
+      console.log({ product });
 
       const updatedProduct = {
         id,
@@ -106,13 +109,16 @@ export class ProductManager {
         stock: stock || product.stock,
       };
 
+      console.log({ updatedProduct });
+
       const updatedProducts = products.map((product) =>
         product.id === id ? updatedProduct : product
       );
 
       await fs.promises.writeFile(this.path, JSON.stringify(updatedProducts));
 
-      return await this.getProducts()
+      // return await this.getProducts()
+      return updatedProduct;
     } catch (error) {
       throw error;
     }

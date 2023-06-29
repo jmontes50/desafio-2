@@ -31,6 +31,39 @@ app.get("/products/:id", async (req, res) => {
     }
 });
 
+app.post("/products", async (req, res) => {
+    try {
+        const product = req.body;
+        const newProduct = await productManager.addProduct(product);
+        res.status(200).json(newProduct);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.put("/products/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const product = req.body;
+        const updatedProduct = await productManager.updateProduct({ id:parseInt(id), ...product });
+        res.status(200).json(updatedProduct);
+    } catch (error) {
+        console.log({error});
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.delete("/products/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        await productManager.deleteProduct(parseInt(id));
+        res.status(200).json({ message: `Product with ${id} deleted` });
+    } catch (error) {
+        console.log({error});
+        res.status(500).json({ error: error.message });
+    }
+});
+
 app.listen(8080, () => {
     console.log("Server listening on port 8080");
 });
