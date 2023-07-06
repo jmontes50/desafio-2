@@ -85,4 +85,6 @@ class CarritoManager {
   }
 }
 
-export default CarritoManager;	
+export {
+  CarritoManager
+} ;	

@@ -27,6 +27,7 @@ export class ProductManager {
     try {
       if (fs.existsSync(this.path)) {
         const data = await fs.promises.readFile(this.path, "utf-8");    
+        console.log({data});
         const result = limit ? JSON.parse(data).slice(0, limit) : JSON.parse(data);
         return result;
       } else {
@@ -96,8 +97,6 @@ export class ProductManager {
       if (!product) {
         throw new Error("El producto a actualizar no existe");
       }
-
-      console.log({ product });
 
       const updatedProduct = {
         id,

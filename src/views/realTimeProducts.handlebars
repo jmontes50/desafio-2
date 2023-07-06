@@ -1,0 +1,35 @@
+<h1>Productos</h1>
+<div>
+  <form id="formProduct">
+    <label for="title">Titulo</label>
+    <input type="text" name="title" placeholder="Titulo" />
+    <br/>
+    <label for="description">Descripcion</label>
+    <input type="text" name="description" placeholder="Descripcion" />
+    <br/>
+    <label for="price">Precio</label>
+    <input type="text" name="price" placeholder="Precio" />
+    <br/>
+    <label for="thumbnail">Thumbnail</label>
+    <input type="text" name="thumbnail" placeholder="Thumbnail" />
+    <br/>
+    <label for="stock">Stock</label>
+    <input type="text" name="stock" placeholder="Stock" />
+    <br/>
+    <label for="code">Codigo</label>
+    <input type="text" name="code" placeholder="Codigo" />
+    <button type="submit">Crear Producto</button>
+  </form>
+</div>
+<div id="listProducts">
+  {{#each products}}
+    <div class="product">
+      <h3>{{title}}</h3>
+      <p>{{description}}</p>
+      <p>{{price}}</p>
+      <button class="btnDelete" data-id="{{id}}">Borrar</button>
+    </div>
+  {{/each}}
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/index.js"></script>
+</div>
