@@ -12,7 +12,7 @@ export default class cartDaoMongoDB {
 
     async getById(id){
         try {
-            const response = await CartModel.findById(id);
+            const response = await CartModel.findById(id).populate("products");
             return response;
         } catch (error) {
             console.log(error);
