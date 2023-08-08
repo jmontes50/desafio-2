@@ -17,7 +17,7 @@ router.post('/login', async(req, res) => {
         const newUser = await login(user);
         if(user) {
             req.session.email = email;
-            res.redirect('/profile');
+            res.redirect('/realtime');
         } else res.redirect('/error-login')
     } catch (error) {
         res.status(500).json({ error: error.message });
