@@ -1,14 +1,34 @@
 import express from "express"
 import morgan from "morgan";
 import handlebars from 'express-handlebars';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
 import { Server } from 'socket.io';
 import { __dirname } from "./paths.js";
 import './daos/mongodb/connection.js'
 import productRouter from "./routes/product.router.js";
 import carritoRouter from "./routes/carrito.router.js";
+import userRouter from './routes/user.router.js';
+import viewsRouter from './routes/views.router.js';
 import { ProductManager } from "./daos/managers/ProductManager.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { getAll, getById, create, update } from "./services/message.services.js";
+
+const mongoStoreOptions = {
+    store: MongoStore.create({
+        mongoUrl: connectionString,
+        crypto: {
+            secret: '1234'
+        }
+    }),
+    secret: '1234',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 60000
+    }
+};
 
 const app = express();
 const productManager = new ProductManager("./productos.json");
@@ -22,6 +42,9 @@ app.engine('handlebars', handlebars.engine());
 app.set('views', __dirname + '/views');
 app.set('view engine', 'handlebars');
 
+app.use(cookieParser());
+app.use(session(mongoStoreOptions));
+
 const httpServer = app.listen(8080, () => {
     console.log("Server listening on port 8080");
 });
@@ -30,6 +53,9 @@ const socketServer = new Server(httpServer);
 
 app.use('/products', productRouter);
 app.use('/carrito', carritoRouter);
+
+app.use('/users', userRouter);
+app.use('/', viewsRouter);
 
 app.get('/realtime', async (req, res) => {
     console.log("in realtime");
