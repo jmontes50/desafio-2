@@ -2,7 +2,7 @@ import { Router } from "express";
 
 const router = Router();
 
-import { getAll, getById, create, update, remove } from "../services/cart.services";
+import { getAll, getById, create, update, remove } from "../services/cart.services.js";
 
 router.post("/", async (req, res) => {
     try {

@@ -1,4 +1,4 @@
-import { CartModel } from "./models/cart.model";
+import { CartModel } from "./models/cart.model.js";
 
 export default class cartDaoMongoDB {
     async getAll(){

@@ -2,14 +2,14 @@ import { Router } from "express";
 const router = Router();
 
 router.get('/login', (req, res) => {
-    res.render('errorRegister')
+    res.render('login')
 });
 
 router.get('/register', (req, res) => {
     res.render('register')
 });
 
-router.get('/error-login', errorLogin = (req, res) => {
+router.get('/error-login', (req, res) => {
     res.render('errorLogin')
 });
 

@@ -6,7 +6,8 @@ router.post('/register', async(req, res) => {
     try {
         const user = req.body;
         const newUser = await register(user);
-        res.status(200).json(newUser);
+        if(newUser) res.redirect('/login');
+        else res.redirect('/error-register');
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -14,9 +15,9 @@ router.post('/register', async(req, res) => {
 router.post('/login', async(req, res) => {
     try {
         const user = req.body;
-        const newUser = await login(user);
-        if(user) {
-            req.session.email = email;
+        const userFound = await login(user);
+        if(userFound) {
+            req.session.email = userFound.email;
             res.redirect('/realtime');
         } else res.redirect('/error-login')
     } catch (error) {

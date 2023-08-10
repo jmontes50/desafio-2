@@ -6,7 +6,7 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import { Server } from 'socket.io';
 import { __dirname } from "./paths.js";
-import './daos/mongodb/connection.js'
+import { connectionString } from './daos/mongodb/connection.js'
 import productRouter from "./routes/product.router.js";
 import carritoRouter from "./routes/carrito.router.js";
 import userRouter from './routes/user.router.js';
