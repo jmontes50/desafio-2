@@ -27,6 +27,11 @@ const UserSchema = new Schema({
         enum: ['user', 'admin'],
         default: 'user',
     },
+    isGithub: {
+        type: Boolean,
+        required: true,
+        default: false
+    }
 });
 
 const UserModel = model('User', UserSchema);
