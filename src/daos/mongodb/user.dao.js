@@ -25,8 +25,9 @@ export default class UserDao {
     async loginUser(user) {
         try {
             const { email, password } = user;
-            const userExist = await UserModel.findOne({ email, password });
+            const userExist = await UserModel.findOne({ email });
             if (userExist) {
+
                 const passValid = isValidPassword(password, userExist);
                 if (!passValid) return false;
                 else return userExist;

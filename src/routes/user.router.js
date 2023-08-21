@@ -31,16 +31,16 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.post('/register-github', passport.authenticate('register'), (req, res, next) => {
-    try {
-        res.json({
-            msg: "Register ok",
-            session: req.session,
-        });
-    } catch (error) {
-        next(error.message);
-    }
-});
+// router.post('/register-github', passport.authenticate('register'), (req, res, next) => {
+//     try {
+//         res.json({
+//             msg: "Register ok",
+//             session: req.session,
+//         });
+//     } catch (error) {
+//         next(error.message);
+//     }
+// });
 
 router.post('/login-github', passport.authenticate('login'), async (req, res, next) => {
     try {

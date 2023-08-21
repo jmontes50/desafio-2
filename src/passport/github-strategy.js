@@ -27,3 +27,12 @@ const registerOrLogin = async (accessToken, refreshToken, profile, done) => {
 }
 
 passport.use('github', new GithubStrategy(strategyOptions, registerOrLogin));
+
+passport.serializeUser((user, done)=>{
+    done(null, user._id)
+});
+
+passport.deserializeUser(async(id, done)=> {
+    const user = await userDao.getById(id);
+    return done(null, user);
+});
