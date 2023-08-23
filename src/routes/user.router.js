@@ -3,6 +3,7 @@ import { register, login } from "../services/user.services.js";
 import passport from 'passport';
 import { isAuth } from '../middleware/isAuth.js';
 import UserDao from "../daos/mongodb/user.dao.js";
+import { generateToken } from "../jwt/auth.js";
 
 const router = Router();
 
@@ -23,24 +24,16 @@ router.post('/login', async (req, res) => {
         const user = req.body;
         const userFound = await login(user);
         if (userFound) {
-            req.session.email = userFound.email;
-            res.redirect('/realtime');
+            // req.session.email = userFound.email;
+            // res.redirect('/realtime');
+            const access_token = generateToken(userFound);
+            res.cookie('token', access_token, {httpOnly:true});
+            res.json({msg: "Login ok", access_token});
         } else res.redirect('/error-login')
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
-
-// router.post('/register-github', passport.authenticate('register'), (req, res, next) => {
-//     try {
-//         res.json({
-//             msg: "Register ok",
-//             session: req.session,
-//         });
-//     } catch (error) {
-//         next(error.message);
-//     }
-// });
 
 router.post('/login-github', passport.authenticate('login'), async (req, res, next) => {
     try {
@@ -73,5 +66,9 @@ router.get('/github-profile', passport.authenticate('github', { scope: ['user:em
         next(error.message);
     }
 });
+
+router.get('/current', passport.authenticate('jwtCookies'), (req, res) => res.send(req.user));
+
+
 
 export default router;

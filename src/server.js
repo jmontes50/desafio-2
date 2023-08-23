@@ -15,6 +15,7 @@ import { ProductManager } from "./daos/managers/ProductManager.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { getAll, getById, create, update } from "./services/message.services.js";
 import './passport/github-strategy.js';
+import './passport/jwt.js'
 
 const mongoStoreOptions = {
     store: MongoStore.create({

@@ -31,6 +31,10 @@ const UserSchema = new Schema({
         type: Boolean,
         required: true,
         default: false
+    },
+    cart:{
+        type: Schema.Types.ObjectId,
+        ref: 'carts',
     }
 });
 
